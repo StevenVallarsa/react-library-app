@@ -1,16 +1,23 @@
 import { useState } from "react";
 
-export default function ListGroup() {
-  const cities: any[] = ["Sudbury", "Toronto", "Ottawa", "North Bay", "Sarnia"];
+interface Props {
+  items: string[];
+  heading: string;
+}
+
+export default function ListGroup({ items, heading }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const handleClick = (index: number) => setSelectedIndex(index);
+
+  const handleClick = (index: number) => {
+    index === selectedIndex ? setSelectedIndex(-1) : setSelectedIndex(index);
+  };
 
   return (
     <>
-      <h1>LIST</h1>
-      {cities.length === 0 && <p>No Cities Found</p>}
+      <h1>{heading.toUpperCase()}</h1>
+      {items.length === 0 && <p>No {heading.substring(0, 1).toUpperCase() + heading.substring(1)} Found</p>}
       <ul className="list-group">
-        {cities.map((city, index) => (
+        {items.map((city, index) => (
           <li
             key={index}
             onClick={() => handleClick(index)}
